@@ -347,9 +347,9 @@ export class ApolloClient<TCacheShape> implements DataProxy {
    *
    * It takes options as an object with the following keys and values:
    */
-  public mutate<T = any, TVariables = OperationVariables>(
-    options: MutationOptions<T, TVariables>,
-  ): Promise<FetchResult<T>> {
+  public mutate<TOptions extends MutateOptions>(
+    options: TOptions,
+  ): Promise<FetchResult<TOptions extends MutationOptions<infer TData> ? TData : never>> {
     if (this.defaultOptions.mutate) {
       options = mergeOptions(this.defaultOptions.mutate, options);
     }
